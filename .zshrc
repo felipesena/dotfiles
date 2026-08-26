@@ -89,8 +89,6 @@ alias subscription-liquibase="mvn clean install -DskipTests -U && mvn liquibase:
 alias use-staging-database="cp ~/wildfly-9.0.2.Final/standalone/configuration/standalone.xml.staging ~/wildfly-9.0.2.Final/standalone/configuration/standalone.xml"
 alias use-local-database="cp ~/wildfly-9.0.2.Final/standalone/configuration/standalone.xml.local ~/wildfly-9.0.2.Final/standalone/configuration/standalone.xml"
 
-alias reset-db="docker exec -i mysql-container mysql -u root -padmin < ~/Documents/Hotmart/hotpay/hotpay-tests/hotpay-tests-api/src/main/resources/reset-db.sql"
-
 #Hotctl
 alias codeartifact-token="hotctl codeartifact token --profile buildstaging --role Developers"
 alias getAWSCredentials="~/Developer/Hotmart/scripts/get_aws_credentials.sh"
