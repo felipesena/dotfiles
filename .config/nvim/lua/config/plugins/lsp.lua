@@ -19,7 +19,7 @@ return {
     },
     config = function()
       local capabilities = require("blink.cmp").get_lsp_capabilities()
-      require("lspconfig").lua_ls.setup({ capabilities = capabilities })
+      vim.lsp.config("lua_ls", { capabilities = capabilities })
 
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
@@ -28,8 +28,7 @@ return {
             return
           end
 
-
-          vim.api.nvim_create_autocmd('BufWritePre', {
+          vim.api.nvim_create_autocmd("BufWritePre", {
             buffer = args.buf,
             callback = function()
               vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
