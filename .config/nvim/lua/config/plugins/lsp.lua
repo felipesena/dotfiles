@@ -46,7 +46,7 @@ return {
             evenBetterToml = {
               formatter = {
                 indentTables = true,
-                indentEntries = true,
+                indentEntries = false,
                 alignEntries = true,
               },
             },
