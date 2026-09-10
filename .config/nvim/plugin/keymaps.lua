@@ -22,3 +22,5 @@ keymap.set("n", "<space>st", function()
 end)
 
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+
+vim.keymap.set("n", "<leader>e", "<cmd>Neotree toggle<cr>")
