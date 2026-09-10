@@ -3,7 +3,7 @@
 # install.sh — bootstrap CLI tooling on a fresh machine (macOS or Linux).
 #
 # Installs: neovim ffmpeg jq poppler fd ripgrep fzf zoxide resvg imagemagick
-#           nvm sdkman golang uv
+#           lazygit nvm sdkman golang uv
 #
 # On macOS: installs Homebrew (if missing) and uses `brew` for everything it can.
 # On Linux: uses the system package manager (apt/dnf/pacman/zypper) plus the
@@ -126,6 +126,18 @@ install_pkg_tools() {
     fi
   fi
 
+  # lazygit — in brew/pacman and recent apt (Ubuntu >=24.04 / Debian >=13);
+  # fall back to the GitHub release everywhere else.
+  if ! have lazygit; then
+    if [ "$PKG" = brew ] || [ "$PKG" = pacman ]; then
+      pkg_install lazygit
+    elif [ "$PKG" = apt ] && apt-cache show lazygit >/dev/null 2>&1; then
+      pkg_install lazygit
+    else
+      install_lazygit_release
+    fi
+  fi
+
   # resvg — packaged on brew/pacman; elsewhere via cargo or GitHub release
   if ! have resvg; then
     if [ "$PKG" = brew ] || [ "$PKG" = pacman ]; then
@@ -137,6 +149,24 @@ install_pkg_tools() {
       install_resvg_release
     fi
   fi
+}
+
+install_lazygit_release() {
+  local ver url tmp
+  ver="$(curl -sSfL https://api.github.com/repos/jesseduffield/lazygit/releases/latest \
+        | jq -r .tag_name)"
+  ver="${ver#v}"
+  case "$OS-$ARCH" in
+    Linux-x86_64)  url="https://github.com/jesseduffield/lazygit/releases/download/v${ver}/lazygit_${ver}_Linux_x86_64.tar.gz" ;;
+    Linux-aarch64) url="https://github.com/jesseduffield/lazygit/releases/download/v${ver}/lazygit_${ver}_Linux_arm64.tar.gz" ;;
+    *) warn "No lazygit prebuilt binary for $OS-$ARCH; skipping." ; return 0 ;;
+  esac
+  tmp="$(mktemp -d)"
+  log "Installing lazygit ${ver} from GitHub release..."
+  curl -sSfL "$url" | tar -xz -C "$tmp" lazygit
+  mkdir -p "$HOME/.local/bin"
+  install -m 0755 "$tmp/lazygit" "$HOME/.local/bin/lazygit"
+  rm -rf "$tmp"
 }
 
 install_resvg_release() {
