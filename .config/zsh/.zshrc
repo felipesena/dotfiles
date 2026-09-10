@@ -17,6 +17,9 @@ setopt hist_ignore_dups
 setopt hist_find_no_dups
 setopt numeric_glob_sort
 
+# Include hidden (dot) files/dirs in completion (also affects fzf-tab)
+_comp_options+=(globdots)
+
 # Completion styling
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
@@ -38,8 +41,27 @@ source "$ZDOTDIR/plugins.zsh"
 # Prompt/theme
 source "$ZDOTDIR/prompt.zsh"
 
-zstyle ':fzf-tab:complete:*:*' fzf-preview 'less ${(Q)realpath}'
-zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'eza --color always --icons always --git -a $realpath'
+# Universal yazi-like preview for every completion (dirs -> listing, files -> content)
+zstyle ':fzf-tab:complete:*' fzf-preview '$ZDOTDIR/fzf-preview.sh ${(Q)realpath}'
+
+# fzf: use fd so hidden files are listed (but skip .git); shared preview
+if command -v fdfind >/dev/null 2>&1; then
+	_fd_cmd=fdfind
+elif command -v fd >/dev/null 2>&1; then
+	_fd_cmd=fd
+fi
+if [ -n "$_fd_cmd" ]; then
+	export FZF_DEFAULT_COMMAND="$_fd_cmd --hidden --follow --exclude .git"
+	export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+	export FZF_ALT_C_COMMAND="$_fd_cmd --type d --hidden --follow --exclude .git"
+fi
+unset _fd_cmd
+export FZF_DEFAULT_OPTS="--preview '$ZDOTDIR/fzf-preview.sh {}' --preview-window=right:60%:wrap"
+export FZF_CTRL_T_OPTS="--preview '$ZDOTDIR/fzf-preview.sh {}'"
+export FZF_ALT_C_OPTS="--preview '$ZDOTDIR/fzf-preview.sh {}'"
+
+# zoxide interactive query (cd foo<Tab>) preview
+export _ZO_FZF_OPTS="--preview '$ZDOTDIR/fzf-preview.sh {2..}' --preview-window=right:60% --height=40% --reverse"
 
 # Shell integrations
 eval "$(fzf --zsh)"
