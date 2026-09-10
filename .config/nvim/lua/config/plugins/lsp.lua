@@ -19,7 +19,7 @@ return {
     },
     config = function()
       local capabilities = require("blink.cmp").get_lsp_capabilities()
-      vim.lsp.config("lua_ls", { capabilities = capabilities })
+      vim.lsp.config("lus_ls", { capabilities = capabilities })
 
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
@@ -41,6 +41,17 @@ return {
         kotlin_language_server = {},
         pyright = {},
         gopls = {},
+        taplo = {
+          settings = {
+            evenBetterToml = {
+              formatter = {
+                indentTables = true,
+                indentEntries = true,
+                alignEntries = true,
+              },
+            },
+          },
+        },
         lua_ls = {
           settings = {
             Lua = {
@@ -63,14 +74,15 @@ return {
       vim.list_extend(ensure_installed, formatters)
 
       require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
+
+      -- Apply per-server config. mason-lspconfig (v2) enables installed servers
+      -- automatically via vim.lsp.enable(); we just feed them their settings.
+      for server_name, server in pairs(servers) do
+        vim.lsp.config(server_name, server)
+      end
+
       require("mason-lspconfig").setup({
-        handlers = {
-          function(server_name)
-            local server = servers[server_name] or {}
-            server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-            require("lspconfig")[server_name].setup(server)
-          end,
-        },
+        ensure_installed = vim.tbl_keys(servers),
       })
     end,
   },
