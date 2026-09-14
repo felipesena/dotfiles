@@ -19,7 +19,6 @@ return {
     },
     config = function()
       local capabilities = require("blink.cmp").get_lsp_capabilities()
-      vim.lsp.config("lus_ls", { capabilities = capabilities })
 
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
@@ -41,6 +40,7 @@ return {
         kotlin_language_server = {},
         pyright = {},
         gopls = {},
+        yamlls = {},
         taplo = {
           settings = {
             evenBetterToml = {
@@ -68,10 +68,20 @@ return {
         "ktlint",
       }
 
+      -- Not lspconfig servers: started manually (jdtls, via after/ftplugin/java.lua)
+      -- or wired as nvim-dap adapters (java-debug-adapter, java-test, kotlin-debug-adapter).
+      local debug_tools = {
+        "jdtls",
+        "java-debug-adapter",
+        "java-test",
+        "kotlin-debug-adapter",
+      }
+
       require("mason").setup()
 
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, formatters)
+      vim.list_extend(ensure_installed, debug_tools)
 
       require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 

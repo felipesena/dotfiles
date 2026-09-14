@@ -17,6 +17,12 @@ return {
         "markdown_inline",
         "kotlin",
         "toml",
+        "yaml",
+        "xml",
+        "groovy",
+        "dockerfile",
+        "bash",
+        "sql",
       })
     end,
   },
