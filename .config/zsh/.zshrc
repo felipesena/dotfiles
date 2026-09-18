@@ -32,6 +32,8 @@ zstyle ':completion:*' menu no
 # Aliases
 source "$ZDOTDIR/aliases.zsh"
 
+source "$ZDOTDIR/work_aliases.zsh"
+
 # Custom bindings
 source "$ZDOTDIR/bindings.zsh"
 
