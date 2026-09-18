@@ -3,3 +3,7 @@
 
 # Logs
 *.log
+
+# herdr
+session.json
+.plugins.lock
