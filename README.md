@@ -9,8 +9,10 @@ place by running `stow .` from the repo root.
 Clone into `~/dotfiles`:
 
 ```shell
+gpg --import gpg-private-backup.asc
 git clone git@github.com:felipesena/dotfiles.git ~/dotfiles
 cd ~/dotfiles
+git-crypt unlock
 ```
 
 Install the CLI tooling (neovim, ripgrep, fzf, stow, nvm, sdkman, go, uv, ...).
