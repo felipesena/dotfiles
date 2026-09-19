@@ -37,7 +37,7 @@ When adding shell config, put it in the matching modular file and keep `.zshrc`'
 - `plugin/` files load automatically at startup (not through lazy): `options.lua`, `keymaps.lua`, `floaterminal.lua` (custom floating terminal, `<leader>oft`).
 - `after/ftplugin/lua.lua` — per-filetype overrides (2-space indent for Lua).
 - Leader is `<space>`.
-- LSP (`lua/config/plugins/lsp.lua`): servers and formatters are installed via Mason. To add a language server, add it to the `servers` table; add formatters to the `formatters` list. Format-on-save is wired through an `LspAttach` autocmd. Current servers: `lua_ls`, `pyright`, `gopls`, `kotlin_language_server`; formatters: `stylua`, `ktlint`.
+- LSP (`lua/config/plugins/lsp.lua`): servers and formatters are installed via Mason. To add a language server, add it to the `servers` table; add formatters to the `formatters` list. Format-on-save is wired through an `LspAttach` autocmd. Current servers: `lua_ls`, `pyright`, `gopls`, `kotlin_lsp`; formatters: `stylua`, `ktlint`.
 - Completion is `blink.cmp` (not nvim-cmp); LSP capabilities come from it.
 - Fuzzy finding is Telescope with a custom `lua/config/telescope/multigrep.lua` (`<leader>fg`) — split the prompt on a double space to pass a ripgrep glob as the second term.
 - Treesitter parsers are an explicit list in `lua/config/plugins/treesitter.lua`.

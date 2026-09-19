@@ -37,7 +37,7 @@ return {
       })
 
       local servers = {
-        kotlin_language_server = {},
+        kotlin_lsp = {},
         pyright = {},
         gopls = {},
         yamlls = {},
