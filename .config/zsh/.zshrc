@@ -4,6 +4,7 @@ compinit -d "$XDG_CACHE_HOME/zsh/zcompdump"
 
 # History
 HISTSIZE=5000
+[[ -d "$XDG_STATE_HOME/zsh" ]] || mkdir -p "$XDG_STATE_HOME/zsh"
 HISTFILE="$XDG_STATE_HOME/zsh/history"
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
