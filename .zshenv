@@ -9,5 +9,6 @@ export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 
 export EDITOR="nvim"
 export VISUAL="nvim"
-
+export PATH=$PATH:$HOME/Library/Application\ Support/JetBrains/Toolbox/scripts/
+export DOCKER_HOST=unix://$HOME/.rd/docker.sock
 export PATH=$HOME/.local/bin:${PATH}
