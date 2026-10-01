@@ -1,10 +1,9 @@
 #JAVA
 alias use-jdk8="sdk use java 8.0.412-zulu"
 alias use-jdk11="sdk use java 11.0.23-tem"
-alias use-jdk17="sdk use java 17.0.7-tem"
+alias use-jdk17="sdk use java 17.0.20-tem"
 alias use-jdk21="sdk use java 21-tem"
-alias use-jdk24="sdk use java 24.0.2-tem"
-alias use-jdk25="sdk use java 25.0.1-tem"
+alias use-jdk25="sdk use java 25.0.4-tem"
 
 alias use-graalvm="sdk use java 22.1.0.r17-grl"
 
