@@ -9,10 +9,8 @@ place by running `stow .` from the repo root.
 Clone into `~/dotfiles`:
 
 ```shell
-gpg --import gpg-private-backup.asc
 git clone git@github.com:felipesena/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-git-crypt unlock
 ```
 
 Install the CLI tooling (neovim, ripgrep, fzf, stow, nvm, sdkman, go, uv, ...).
@@ -29,6 +27,23 @@ Create the symlinks:
 ```shell
 stow .          # create/refresh symlinks into $HOME
 stow -D .       # remove them
+```
+
+## Secrets
+
+Secrets live in `.config/zsh/.zshenv.secret`, which is intentionally
+**not** versioned (it's in `.gitignore`). Create it by hand after cloning and
+fill in your own values:
+
+```shell
+cat > ~/.config/zsh/.zshenv.secret <<'EOF'
+export GITHUB_PERSONAL_ACCESS_TOKEN="..."
+export JIRA_URL="..."
+export JIRA_USERNAME="..."
+export JIRA_API_TOKEN="..."
+export NEW_RELIC_API_KEY="..."
+export GH_TOKEN="..."
+EOF
 ```
 
 Then restart the shell (`exec zsh`) to pick up the new config.

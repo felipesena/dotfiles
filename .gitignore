@@ -1,9 +1,10 @@
 # Zsh
 .zcompdump*
+.zshenv.secret
 
 # Logs
 *.log
 
-# herdr
-session.json
-.plugins.lock
+# herdr — ignore all runtime/state, keep only config.toml
+.config/herdr/*
+!.config/herdr/config.toml
